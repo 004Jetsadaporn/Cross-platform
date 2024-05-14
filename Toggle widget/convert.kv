@@ -1,0 +1,47 @@
+<UI>:
+    id: scr_manager
+    Scr1:
+    Scr2:
+        
+<Scr1>:
+    name: "Scr1"
+    canvas.before:
+        Rectangle:
+            source: "Jet.jpg"
+            size: root.width, root.height
+            pos: self.pos 
+    BoxLayout:
+        orientation: 'vertical'       
+        Button:
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            size_hint: 0.5,0.3   
+            text: "แปลงเลขฐาน"
+            font_name: "tahoma"
+            on_press: app.root.current = "Scr2"
+
+<Scr2>
+    name: "Scr2"
+    BoxLayout:
+        orientation: 'vertical'
+        TextInput:
+            id: txt_number
+        BoxLayout: 
+            ToggleButton:
+                text: "base2"
+                group: "convert_mode"
+                font_name: "tahoma"
+                on_press: root.convert(*args)
+            ToggleButton:
+                text: "base8"
+                group: "convert_mode"
+                font_name: "tahoma"
+                on_press: root.convert(*args)
+            ToggleButton:
+                text: "base16"
+                group: "convert_mode"
+                font_name: "tahoma"
+                on_press: root.convert(*args)                 
+                     
+        Label:
+            id: lbl_output
+            
