@@ -1,0 +1,612 @@
+#:import MDActionBottomAppBarButton kivymd.uix.appbar.MDActionBottomAppBarButton
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+#:import KineticEffect kivy.effects.kinetic.KineticEffect
+#:import Window kivy.core.window.Window
+#:import Vector kivy.vector.Vector
+<UI1Screen>:
+    name:"ui1screen"
+    md_bg_color: self.theme_cls.backgroundColor
+    id:ui1scrn
+    MDBoxLayout:
+        #md_bg_color:  self.theme_cls.backgroundColor
+        orientation:'vertical'
+        id:box0
+        ##as md screen manager doesnot support many transition ie why we using kivy screen manager 
+        ScreenManager:
+            
+            id:screen_manager
+            transition:NoTransition()
+            MDScreen:
+                id:chatscrn
+                name:"chatscreen"
+                MDFloatLayout:
+                    #orientation:"vertical"
+                    
+                    
+                    
+                    MDScrollView:
+                        pos_hint:{'x':0,'top':1}
+                        #always_overscroll:False
+                        do_scroll_x:False
+                        
+                        
+                        MDBoxLayout:
+                            #size_hint_y: None
+                            #height: self.minimum_height
+                            adaptive_height:True
+                            orientation:'vertical'
+                            spacing:"3dp"
+                            pos_hint:{'center_x':0.5,'center_y':0.5}
+                            id:scroll_box
+                            MDBoxLayout:
+                                orientation:'vertical'
+                                adaptive_height:True
+                                id:box_as
+                                MDTopAppBar:
+                                    #theme_bg_color: "Custom"
+                                    type: "small"
+                                    #md_bg_color:get_color_from_hex('#128c7e')
+                                    MDTopAppBarTitle:
+                                        text: "What-App"
+                                        theme_font_size:"Custom"
+                                        font_size:"25sp"
+                                        #pos_hint: {"x": 0.01}
+                                        theme_text_color:'Custom'
+                                        text_color:self.theme_cls.primaryColor
+                                        bold:True
+                                    Widget:
+                                    MDTopAppBarTrailingButtonContainer:
+                                        pos_hint:{'right':1}
+                                        #adaptive_size:True
+
+                                        MDActionTopAppBarButton:
+                                            icon: "camera-outline"
+                                            #theme_icon_color:"Custom"
+                                            #icon_color:'white'
+                                        
+                                        MDActionTopAppBarButton:
+                                            icon:'dots-vertical'
+                                            #theme_icon_color:"Custom"
+                                            #icon_color:'white'
+                                MDBoxLayout:
+                                    padding: ['18dp', '18dp', '18dp', '18dp']
+                                    radius:'10dp'
+                                    #adaptive_size:True
+                                    adaptive_height:True
+                                    spacing:'10dp'
+                                    MDIcon:
+                                        icon:'magnify'
+                                        pos_hint:{'center_y':0.5}
+                                    MDButton:
+                                        style: "text"
+                        
+                                        theme_width: "Custom"
+                                        size_hint:1,None
+                                        height:'48dp'
+                                        theme_bg_color:'Custom'
+                                        md_bg_color:self.theme_cls.surfaceVariantColor
+
+
+                                        on_release:
+                                            root._search_button_clicked()
+                                        
+
+                                        MDButtonText:
+                                            text:'Search...'
+                                            
+                                        
+                                        #adaptive_size:True
+
+                                
+
+
+                    MDFabButton:
+                        pos_hint:{'center_x':0.90,'center_y':0.25}
+                        icon: "checkbox-blank-circle-outline"
+                        style: "small"
+                        theme_bg_color:'Custom'
+                        theme_icon_color:'Custom'
+                        icon_color:'blue'
+                        md_bg_color:'white' #self.theme_cls.primaryColor #get_color_from_hex('#128c7e')
+                    MDFabButton:
+                        pos_hint:{'center_x':0.90,'center_y':0.15}
+                        icon: "message-plus"
+                        style: "standard"
+                        theme_bg_color:'Custom'
+                        theme_icon_color:'Custom'
+                        icon_color:'white'
+                        md_bg_color:self.theme_cls.primaryColor #get_color_from_hex('#128c7e')
+
+            UI1UpdatesScreen:
+                name:'updatesscreen'
+            UI1CommunitiesScreen:
+                name:"communitiesscreen"
+            UI1CallsScreen:
+                name:"callscreen"
+
+        
+
+
+
+                    
+<UI1NavigationBar>:
+
+    radius:'10dp'
+    #on_switch_tabs: root.on_switch_tabs(*args)
+    MDNavigationItem:
+        
+        #on_active:root.on_active(*args)
+        active:True
+        id:i1
+        MDNavigationItemIcon:
+            icon:'message-text-outline' if not i1.active else 'message-text'
+        MDNavigationItemLabel:
+            text:"Chats"
+            bold:False if not i1.active else True
+    MDNavigationItem:
+        on_active:root._on_active(*args)
+        id:i2
+
+        
+        MDNavigationItemIcon:
+            icon:'chat-outline' if not i2.active else 'chat'
+        MDNavigationItemLabel:
+            text:"Updates"
+            bold: False if not i2.active else True
+
+    MDNavigationItem:
+        on_active:root._on_active(*args)
+        id:i3
+
+        MDNavigationItemIcon:
+            icon:'account-group-outline' if not i3.active else 'account-group'
+        MDNavigationItemLabel:
+            text:"Communities"
+            bold:False if not i3.active else True
+    MDNavigationItem:
+        on_active:root._on_active(*args)
+        id:i4
+        
+        MDNavigationItemIcon:
+            icon:'phone-outline'if not i4.active else 'phone'
+        MDNavigationItemLabel:
+            text:"Calls"
+            bold:False if not i4.active else True
+# ScreenManager:
+#     id:screen_manager2
+
+
+                
+
+<UI1Dialog>:
+
+    background:''
+    background_color:0,0,0,0
+
+    MDFloatLayout:
+        radius:[dp(root._radius),]
+        FitImage:
+            pos_hint:{'center_x':0.5,'top':1}
+            source:root._dp
+        MDLabel:
+            text:root._name
+            size_hint_x:1
+            pos_hint:{'x':0,'top':1}
+            theme_text_color:"Custom"
+            text_color:self.theme_cls.surfaceVariantColor
+            adaptive_height:True
+            md_bg_color:[0,0,0,0.5]
+            padding:'10dp'
+
+        MDBoxLayout:
+            pos_hint:{'x':0,'y':0}
+            adaptive_height:True
+            padding:['8dp',0,'8dp',0]
+            spacing:"8dp"
+
+            md_bg_color:self.theme_cls.surfaceVariantColor
+            Widget:
+            MDIconButton:
+                icon:"message-outline"
+            MDIconButton:
+                icon:"phone-outline"
+            MDIconButton:
+                icon:"video-outline"
+            MDIconButton:
+                icon:"information-box-outline"
+            Widget:
+
+
+
+
+
+<UI1ChatLabel>:
+    canvas.before:
+        Color:
+            rgba:get_color_from_hex('#e0f6ca') if root.sender else get_color_from_hex('#ffffff')
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(5), dp(5), dp(5), dp(5)] if self.sender else [dp(5), dp(5), dp(5), dp(5)]
+
+    #adaptive_size:True
+    #text_size: self.width, None
+    #size_hint: None,None
+    #size: self.texture_size
+    #size:'100dp',None
+    size_hint:None,None
+    width: '180dp'
+    
+    height:self.texture_size[1]
+    #text_size: self.size
+    valign:'center'
+    #halign:''
+    padding:"5dp" 
+    
+
+
+<UI1Item>:
+
+    adaptive_size:True
+    #MDListItemLeadingIcon:
+    MDListItemLeadingAvatar:
+        adaptive_size:True
+        source: root.dp_pic 
+        size:'60dp','60dp'
+        on_release:root._open_dialog(self.source,_name.text,*args)
+        #print("hello")
+
+    MDListItemHeadlineText:
+        adaptive_size:True
+        text:root.name
+        id:_name
+
+    MDListItemSupportingText:
+        adaptive_size:True
+        text:root.last_message
+
+    
+    MDLabel:
+        adaptive_size:True
+        valign: 'top'
+        halign: 'center'
+        theme_font_size:'Custom'
+        font_size:'11sp'
+        text:'7:32pm'
+        pos_hint:{"right":0.95,'center_y':0.5}
+
+
+
+
+<UI1ChatScreen>:
+    name:'ui1chatscreen'
+    
+    MDBoxLayout:
+        orientation:'vertical'
+        padding: [0, 0, 0, '1dp']
+        #md_bg_color:get_color_from_hex("#ebe5de")
+
+        #adaptive_height:True
+        MDBoxLayout:
+            #adaptive_height:True
+
+            #theme_bg_color: "Custom"
+            #type: "small"
+            padding:'5dp'
+            spacing:'5dp'
+            #adaptive_height:True
+            size_hint_y:None
+            height:'60dp'
+            size_hint_x: 1 
+            MDIconButton:
+                icon:"arrow-left"
+                #theme_icon_color:'Custom'
+                #icon_color:'white'
+                pos_hint:{'center_y':0.5}
+            
+            FitImage:
+                source:root.dp_pic
+                size:'48dp','48dp'
+                size_hint:None,None
+                radius:self.height/2
+
+            
+            MDLabel:
+                pos_hint:{'center_y':0.5}
+                adaptive_size:True
+                text:root.chat_name
+                #theme_text_color:"Custom"
+                theme_font_size:'Custom'
+                #text_color:'white'
+                font_size:"20sp"
+            Widget:
+            MDTopAppBarTrailingButtonContainer:
+
+                MDActionTopAppBarButton:
+                    #theme_icon_color:'Custom'
+                    #icon_color:'white'
+                    icon: "video"
+                MDActionTopAppBarButton:
+                    #theme_icon_color:'Custom'
+                    #icon_color:'white'
+                    icon: "phone"
+                MDActionTopAppBarButton:
+                    #theme_icon_color:'Custom'
+                    #icon_color:'white'
+                    icon: "dots-vertical"
+
+
+            
+        MDBoxLayout:
+            size_hint_y:1  
+            md_bg_color:get_color_from_hex("#ebe5de")
+            MDScrollView:
+                do_scroll_x:False
+                
+
+                MDBoxLayout:
+                    orientation:'vertical'
+                    #md_bg_color:get_color_from_hex("#ebe5de")
+                    padding:"5dp"
+                    spacing: '5dp'
+                    adaptive_height:True
+                    id:chat_box
+        MDBoxLayout:
+            adaptive_height:True
+            padding: ['10dp', '2dp', '10dp', '2dp']
+
+            spacing:'5dp'
+            md_bg_color:get_color_from_hex("#ebe5de")
+
+            MDBoxLayout:
+                adaptive_height:True
+                md_bg_color:'white'
+                radius:'25dp'
+                padding:'1dp'
+                MDIcon:
+                    icon:'face-man-outline'
+                    pos_hint:{'center_y':0.5}
+                #UI1TextField:
+
+                MDTextField:
+                    mode: "filled"
+                    radius:'25dp'
+                    theme_line_color: "Custom"
+                    theme_bg_color: "Custom"
+                    fill_color_normal: 1, 1, 1, 0
+                    fill_color_focus:'white'
+                    line_color_normal:[1,1,1,0] #"green"
+                    line_color_focus: [1,1,1,0]
+                    pos_hint:{'center_y':0.5}
+                    on_focus:root._focus(*args)
+                    id:ti
+                        
+
+                    MDTextFieldHintText:
+                        text:"Message"
+                    
+                MDIconButton:
+                    icon:'paperclip'
+                    pos_hint:{'center_y':0.5}
+                MDIconButton:
+                    icon:'currency-inr'
+                    pos_hint:{'center_y':0.5}
+                MDIconButton:
+                    icon:'camera-outline'
+                    pos_hint:{'center_y':0.5}
+            MDIconButton:
+                style: "filled"
+                icon:'microphone' if not ti.focus else 'send'
+                pos_hint:{'center_y':0.5}
+
+
+
+
+<UI1SearchPlate>:
+    orientation:'vertical'
+    spacing:'5dp'
+    padding:'12dp'
+    adaptive_height:True
+
+    MDTextField:
+        #text:'Search...'
+        mode: "filled"
+        focus:True
+        on_focus:root._focus(*args)
+        on_disabled:print("disabled")
+        
+        radius:'25dp'
+        theme_line_color: "Custom"
+        line_color_normal:[1,1,1,0] #"green"
+        line_color_focus: [1,1,1,0]
+        MDTextFieldHintText:
+            text:"Search..."
+    MDStackLayout:
+        spacing: "12dp"
+        adaptive_height: True
+        id:stack_box
+
+
+<UI1TextField>:
+    
+    #border:[10,10,10,10]        
+    #background_normal: ''
+    background_color: [1,1,1,1]
+    hint_text:'Hello'
+    background_image: ""
+    background_normal: ""
+    background_active: ""
+    canvas.before:
+        Color:
+            rgba:[0,1,0,1]
+        RoundedRectangle:
+            pos:self.pos
+            size:self.size
+            r:50
+
+
+
+
+<UI1UpdatesScreen>:
+    name:"ui1updatescreen"
+    MDBoxLayout:
+        orientation:'vertical'
+        #adaptive_height:True
+        spacing:'8dp'
+        MDTopAppBar:
+            type: "small"
+            
+
+            adaptive_height:True
+            MDTopAppBarTitle:
+                text: "Updates"
+                theme_font_size:"Custom"
+                font_size:"25sp"
+                
+                
+                bold:True
+            Widget:
+            MDTopAppBarTrailingButtonContainer:
+                pos_hint:{'right':1}
+                #adaptive_size:True
+
+                MDActionTopAppBarButton:
+                    icon: "camera-outline"
+                    #theme_icon_color:"Custom"
+                    #icon_color:'white'
+                MDActionTopAppBarButton:
+                    icon: "magnify"
+                    #theme_icon_color:"Custom"
+                    #icon_color:'white'
+                
+                MDActionTopAppBarButton:
+                    icon:'dots-vertical'
+                    #theme_icon_color:"Custom"
+                    #icon_color:'white'
+            
+        MDScrollView:
+            do_scroll_x:False
+            do_scroll_y:True
+            MDBoxLayout:
+                orientation:'vertical'
+                adaptive_height:True
+                MDFloatLayout:
+                    size_hint_y:None
+                    height:'50dp'
+                    orientation:'vertical'
+                    MDLabel:
+                        
+                        text:'Status'
+                        bold:True
+                        theme_font_size:"Custom"
+                        font_size:"20sp"
+                        pos_hint:{'x':0.018,'center_y':0.5}
+                        valign:"center"
+                        #halign:"left"
+                        adaptive_size:True
+
+                    MDIconButton:
+                        icon:'dots-vertical'
+                        pos_hint:{'right':0.98,'center_y':0.5}
+        
+                MDScrollView:
+                    #effect_cls:'ScrollEffect'
+                    do_scroll_x:True
+                    do_scroll_y:False
+                    size_hint_y:None
+                    # height of UI1Status widget
+                    height:dp(100)+dp(5)
+                    scroll_distance: '1dp'
+                    bar_color:[0,0,0,0]
+                    bar_inactive_color:[0,0,0,0]
+
+                    
+
+                    BoxLayout:
+                        #md_bg_color:[1,0,0,1]
+                        
+                        size_hint_x:None
+                        size_hint_y:None
+                        width:self.minimum_width
+                        height:self.minimum_height
+                        padding:'10dp'
+                        spacing:'5dp'
+                        id:bss
+                        
+
+
+                        
+                MDDivider:
+                MDFloatLayout:
+                    size_hint_y:None
+                    height:'50dp'
+                    orientation:'vertical'
+                    MDLabel:
+                        
+                        text:'Channels'
+                        bold:True
+                        theme_font_size:"Custom"
+                        font_size:"20sp"
+                        pos_hint:{'x':0.018,'center_y':0.5}
+                        valign:"center"
+                        #halign:"left"
+                        adaptive_size:True
+
+                    MDIconButton:
+                        icon:'plus'
+                        pos_hint:{'right':0.98,'center_y':0.5}
+                MDListItem:
+                    MDListItemLeadingIcon:
+                        icon:'whatsapp'
+                        theme_icon_color:'Custom'
+                        icon_color:'green'
+                    MDListItemHeadlineText:
+                        text:"WhatsApp"
+                        bold:True
+                    MDListItemSupportingText:
+                        text:"This WhatsApp UI Design using Kivymd"
+                MDFloatLayout:
+                    size_hint_y:None
+                    height:'50dp'
+                    orientation:'vertical'
+                    MDLabel:
+                        
+                        text:'Find channels'
+                        bold:True
+                        theme_font_size:"Custom"
+                        font_size:"18sp"
+                        pos_hint:{'x':0.018,'center_y':0.5}
+                        valign:"center"
+                        #halign:"left"
+                        adaptive_size:True
+                    MDButton:
+                        style: 'text'
+
+                        pos_hint:{'right':0.95,'center_y':0.5}
+                        MDButtonText:
+                            text:"See all"
+                    MDIcon:
+                        icon:'arrow-right-bold-outline'
+                        pos_hint:{'right':0.98,'center_y':0.5}
+                MDScrollView:
+                    do_scroll_x:True
+                    do_scroll_y:False
+                    size_hint_y:None
+                    #Setting height of the UI1FollowCard
+                    height:dp(160)+dp(5)
+                    scroll_distance: '1dp'
+                    bar_color:[0,0,0,0]
+                    bar_inactive_color:[0,0,0,0]
+                    #effect_cls:'ScrollEffect'
+
+
+                    
+
+                    BoxLayout:
+                        #md_bg_color:[1,0,0,1]
+                        
+                        size_hint_x:None
+                        size_hint_y:None
+                        width:self.minimum_width
