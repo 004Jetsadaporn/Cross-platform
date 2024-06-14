@@ -1,0 +1,126 @@
+<Ui>:
+    id:scr_manager
+    Scr_home:
+    Scr_register:
+        
+<Scr_home>:
+    name: "Scr_home"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.5, 0, 0.5, 1  # Purple color (RGBA)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Image:
+            source: "dlt.png"
+            size_hint: None, None  # กำหนดให้ขนาดไม่ได้ตั้งค่าโดยอัตโนมัติ
+            size: 300, 300 
+            pos_hint: {'center_x': 0.5, 'top': 1.0}
+        Button:
+            text: 'เข้าสู่ระบบ'
+            font_name: 'tahoma'
+            size_hint: 0.50 , 0.20
+            color: 0, 0, 0, 1  # black
+            background_color: 1, 1, 0,  # yellow
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_press: 
+        Button:
+            text: 'ลงทะเบียนใหม่'
+            font_name: 'tahoma'
+            size_hint: 0.50 , 0.20
+            background_color: 1, 0.5, 0.8, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_press: app.root.current = "Scr_register"
+        Button:
+            text: 'For Foreigner'
+            font_name: 'tahoma'
+            size_hint: 0.50 , 0.20
+            background_color: 0.53, 0.81, 0.92, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_press:
+        Image:
+            source: "Line.png"
+            size_hint: None, None  # กำหนดให้ขนาดไม่ได้ตั้งค่าโดยอัตโนมัติ
+            size: 50, 50
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        Label:
+            text: 'Copyrights สงวนลิขสิทธิ์ 2021 กรมการขนส่งทางบก | dlt.go.th'
+            font_name: 'tahoma'
+            font_size: 10  # ขนาดตัวอักษร
+            color: 0, 0, 0, 1  # สีข้อความเป็นดังนี้ (RGBA)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}  # ตำแหน่งศูนย์กลางแนวนอนและตั้งศูนย์กลางแนวตั้ง
+<Scr_register>:
+    name: "Scr_register"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 0.5, 0, 0.5, 1  # Purple color (RGBA)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Image:
+            source: "dlt.png"
+            size_hint: None, None  # กำหนดให้ขนาดไม่ได้ตั้งค่าโดยอัตโนมัติ
+            size: 200, 200
+            pos_hint: {'center_x': 0.5, 'top': 1.0}
+        Label:
+            text: 'ลงทะเบียนเข้ารับการอบรม'
+            font_name: 'tahoma'
+            color: 0, 0, 0, 1  # black
+            font_size: 16
+        
+        TextInput:
+            id: txt_cardcode 
+            hint_text: "ระบุเลขบัตรประชาชน"
+            font_name: 'tahoma'
+            size_hint: 0.8, None
+            height: 40
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_text_validate:
+                if len(txt_cardcode.text) > 13: txt_cardcode.text = txt_cardcode.text[:13]
+
+        TextInput:
+            id: txt_ccode 
+            hint_text: "ระบุเลขบัตรประชาชนอีกครั้ง"
+            font_name: 'tahoma'
+            size_hint: 0.8, None
+            height: 40
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_text_validate:
+                if len(txt_ccode.text) > 13: txt_ccode.text = txt_ccode.text[:13]
+                if txt_ccode.text != txt_cardcode.text: txt_ccode.text = ""
+        TextInput:
+            id: txt_tel 
+            hint_text: "ระบุเบอร์โทรศัพท์"
+            font_name: 'tahoma'
+            size_hint: 0.8, None
+            height: 40
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_text_validate:
+                if len(txt_tel.text) > 10: txt_tel.text = txt_tel.text[:10]
+
+        TextInput:
+            id: txt_email 
+            hint_text: "ระบุอีเมล"
+            font_name: 'tahoma'
+            size_hint: 0.8, None  # กำหนดขนาดเป็น 80% ของพื้นที่ทั้งหมดแนวนอนและกำหนดความสูงเป็นขนาดเจาะจง
+            height: 40  # กำหนดความสูงของ TextInput เป็น 40 พิกเซล
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        Button:
+            id: btn_regis
+            size_hint: 0.50, 0.20
+            background_color: 1, 0.5, 0.8, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            text: 'ดำเนินการ'
+            font_name: 'tahoma'
+            on_press: root.process_registration()
+        Button:
+            #pos_hint: {'x':0.85,'y': 0.85}
+            size_hint: 0.1, 0.2
+            text: 'Back'
+            on_press: app.root.current = "Scr_home"
